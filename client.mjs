@@ -6,19 +6,22 @@ import BN from "bn.js";
 
 import idl from "./idl.json" assert { type: "json" };
 
+import dotenv from "dotenv";
+dotenv.config();
+
 console.log(idl);
 async function clientWorkflow() {
   const connection = new Connection("https://api.devnet.solana.com");
 
   const programId = new PublicKey(
-    "5tBeqTQRrMqnPX8QKSYmmdVKUBHufgAVe5h62dWcsHKd"
+    process.env.PROGRAM_ID
   );
 
   console.log(programId);
 
 
 
-  const keypairData = JSON.parse(fs.readFileSync("./new_account.json", "utf8"));
+  const keypairData = JSON.parse(fs.readFileSync("./client_account.json", "utf8"));
 
   const newAccount = Keypair.fromSecretKey(
     Uint8Array.from(keypairData)
@@ -45,7 +48,7 @@ async function clientWorkflow() {
 
   // Derive signer2's public key (server-side key)
   const signer1PublicKey = new anchor.web3.PublicKey(
-    "9FtjUoc91HTyBCE9RfJt5gP6uoC9VPrxDe66SwuCdsnk"
+    process.env.SERVER_ACCOUNT_ADDRESS
   );
 
   // Create the transaction

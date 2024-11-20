@@ -1,12 +1,16 @@
 const express = require("express");
+const fs = require("node:fs")
 const { Keypair, Connection ,Transaction} = require("@solana/web3.js");
 
 const app = express();
 app.use(express.json());
 
 // Signer2's private key (securely stored on the server)
+
+const keypairData = JSON.parse(fs.readFileSync("./server_account.json", "utf8"));
+
 const signer2 = Keypair.fromSecretKey(
-  Uint8Array.from([151,170,186,99,110,234,221,77,219,172,51,228,80,62,191,244,24,239,43,125,233,191,241,123,69,123,196,8,58,177,64,135,122,174,30,233,160,175,180,141,13,16,96,103,7,19,100,149,113,104,23,182,249,249,66,220,80,7,211,232,30,234,128,53])
+  Uint8Array.from(keypairData)
 );
 
 // Solana connection
